@@ -1,0 +1,33 @@
+CREATE OR REFRESH STREAMING TABLE primeins.gold.fact_claims AS
+SELECT
+  claimid,
+  MAX(policyid) AS policyid,
+  MAX(incident_state) AS incident_state,
+  MAX(incident_city) AS incident_city,
+  MAX(incident_type) AS incident_type,
+  MAX(collision_type) AS collision_type,
+  MAX(incident_severity) AS incident_severity,
+  MAX(authorities_contacted) AS authorities_contacted,
+  MAX(number_of_vehicles_involved) AS number_of_vehicles_involved,
+  MAX(Claim_Rejected) AS Claim_Rejected,
+  MAX(incident_happened_in_days) AS incident_happened_in_days,
+  MAX(claim_logged_in_days) AS claim_logged_in_days,
+  MAX(claim_processed_in_days) AS claim_processed_in_days,
+  MAX(incident_date) AS incident_date,
+  MAX(claim_logged_on) AS claim_logged_on,
+  MAX(claim_processed_on) AS claim_processed_on,
+  MAX(days_to_process_claim) AS days_to_process_claim,
+  MAX(injury_amount) AS injury_amount,
+  MAX(property_damage_amount) AS property_damage_amount,
+  MAX(vehicle_damage_amount) AS vehicle_damage_amount,
+  MAX(bodily_injuries) AS bodily_injuries,
+  MAX(witnesses) AS witnesses,
+  MAX(police_report_available) AS police_report_available,
+  MAX(property_damage) AS property_damage,
+  MAX(flag_high_amount_no_report) AS flag_high_amount_no_report,
+  MAX(flag_theft_no_authority) AS flag_theft_no_authority,
+  MAX(flag_damage_severity_mismatch) AS flag_damage_severity_mismatch,
+  MAX(flag_no_witness_high_claim) AS flag_no_witness_high_claim,
+  MAX(flag_unprocessed_claim) AS flag_unprocessed_claim
+FROM STREAM(live.primeins.silver.claims)
+GROUP BY claimid
